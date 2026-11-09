@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Farmacia Verde · ¿Qué te pasa hoy?</title>
+<meta name="description" content="Tu farmacia de cabecera en el celular: tocás lo que te pasa y en minutos tenés la taza.">
+<meta name="theme-color" content="#2f5d3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Farmacia Verde">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icono.png">
+<style>
+:root{--v:#2f5d3a;--v2:#4f8a5b;--crema:#fbf7ef;--tinta:#22301f;--suave:#6b7a66;--oro:#c9952b;--rojo:#a1442f}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--crema);color:var(--tinta);font-size:17px;line-height:1.45;padding-bottom:84px}
+header{background:var(--v);color:#fff;padding:18px 18px 22px;border-radius:0 0 22px 22px}
+header small{opacity:.8;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+header h1{margin:4px 0 2px;font-size:26px;line-height:1.15}
+header p{margin:0;opacity:.9;font-size:15px}
+.buscar{margin:14px 0 0;width:100%;padding:13px 14px;border-radius:14px;border:0;font-size:16px}
+main{padding:14px}
+h2{font-size:19px;margin:18px 4px 10px}
+.grilla{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.cat,.item{min-width:0;overflow-wrap:anywhere}html,body{overflow-x:hidden}
+.cat{background:#fff;border-radius:16px;padding:14px 12px;border:1px solid #e7e0d0;font-size:15px;font-weight:600;text-align:left;color:var(--tinta);min-height:84px;display:flex;flex-direction:column;justify-content:space-between}
+.cat span{font-size:26px}
+.cat em{font-style:normal;font-weight:400;color:var(--suave);font-size:13px}
+.item{background:#fff;border-radius:14px;padding:13px 14px;margin:8px 0;border:1px solid #e7e0d0;display:flex;justify-content:space-between;gap:10px;align-items:center;width:100%;text-align:left;font-size:16px;color:var(--tinta)}
+.item b{display:block;font-weight:600}
+.item small{color:var(--suave);font-size:13px}
+.chip{display:inline-block;background:#e9f1e6;color:var(--v);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600;margin:0 4px 4px 0}
+.volver{background:none;border:0;color:var(--v);font-size:16px;padding:6px 0;font-weight:600}
+.ficha{background:#fff;border-radius:18px;padding:18px;border:1px solid #e7e0d0}
+.ficha h3{margin:4px 0 6px;font-size:22px;line-height:1.2}
+.ficha .intro{color:#44513f}
+ol.pasos{padding-left:0;list-style:none;counter-reset:p;margin:14px 0}
+ol.pasos li{counter-increment:p;position:relative;padding:10px 10px 10px 46px;margin:6px 0;background:var(--crema);border-radius:12px}
+ol.pasos li:before{content:counter(p);position:absolute;left:10px;top:9px;width:26px;height:26px;border-radius:50%;background:var(--v2);color:#fff;font-weight:700;text-align:center;line-height:26px;font-size:14px}
+.caja{border-radius:12px;padding:12px 14px;margin:10px 0;font-size:15px}
+.atencion{background:#fbece7;border-left:4px solid var(--rojo)}
+.consejo{background:#f3eedf;border-left:4px solid var(--oro)}
+.caja b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.timer{background:var(--v);color:#fff;border-radius:16px;padding:14px;margin:12px 0;text-align:center}
+.timer .reloj{font-size:44px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.timer button{background:#fff;color:var(--v);border:0;border-radius:24px;padding:10px 16px;font-size:15px;font-weight:700;margin:4px}
+.timer small{display:block;opacity:.85;font-size:13px}
+.pag{color:var(--suave);font-size:13px;margin-top:10px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e7e0d0;display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+nav button{flex:1;background:none;border:0;font-size:12px;color:var(--suave);padding:6px 2px}
+nav button span{display:block;font-size:22px}
+nav button.on{color:var(--v);font-weight:700}
+.dia{background:#fff;border-radius:16px;padding:14px;border:1px solid #e7e0d0;margin:10px 0}
+.dia h4{margin:0 0 6px;font-size:17px}
+.dia label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px dashed #e7e0d0}
+.dia input{width:22px;height:22px;accent-color:var(--v);flex:none;margin-top:2px}
+.dia a{color:var(--v);font-weight:600}
+.barra{height:10px;background:#e7e0d0;border-radius:6px;overflow:hidden;margin:6px 0 2px}
+.barra i{display:block;height:100%;background:var(--oro);width:0}
+.btn{display:block;width:100%;background:var(--v);color:#fff;border:0;border-radius:14px;padding:14px;font-size:16px;font-weight:700;margin:12px 0;text-align:center;text-decoration:none}
+.despensa label{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #e7e0d0;border-radius:12px;padding:11px 12px;margin:6px 0}
+.despensa input{width:22px;height:22px;accent-color:var(--v)}
+.despensa small{color:var(--suave);display:block;font-size:13px}
+.nota{font-size:13px;color:var(--suave);text-align:center;margin:20px 8px}
+.instalar{background:#fff7e3;border:1px solid #ecd9a6;border-radius:14px;padding:12px 14px;font-size:14px;margin:12px 0}
+.oculto{display:none}
+</style>
+</head>
+<body>
+<header>
+  <small>Farmacia Verde™ · la farmacia que no cierra</small>
+  <h1 id="titulo">¿Qué te pasa hoy?</h1>
+  <p id="bajada">Tocá lo que te pasa y en minutos tenés la taza, la práctica o el ritual.</p>
+  <input class="buscar" id="buscar" type="search" placeholder="Buscá: dormir, panza, garganta, romero…" autocomplete="off">
+</header>
+<main id="app"></main>
+<nav>
+  <button data-v="inicio" class="on"><span>🌿</span>Qué me pasa</button>
+  <button data-v="semana"><span>☀️</span>Mi semana</button>
+  <button data-v="despensa"><span>🫙</span>Despensa</button>
+  <button data-v="todo"><span>📖</span>Los 47</button>
+</nav>
+<script>
+// Contenido: Farmacia Verde, 47 protocolos (PDF v2). Paginas = paginas del libro.
+const T={F:"Fitoterapia",C:"Medicina china",A:"Ayurveda",B:"Flores de Bach",R:"Reflexología"};
+const P=[
+// ---------- FITOTERAPIA ----------
+{id:"tila",t:"Tila para bajar revoluciones",tr:"F",p:15,min:10,cat:["dormir","tension"],
+ i:"Se usa tradicionalmente para acompañar momentos de tensión y facilitar el descanso, cuando venís con la mente acelerada.",
+ s:["Usá 1 cucharadita colmada de flor seca por taza (200–250 ml).","Agregá agua caliente y dejá reposar 8 a 12 minutos con la taza tapada.","Colá y tomá tibio, en especial en la franja de la noche."],
+ c:"Si la usás antes de dormir, no la tomes muy tarde para no despertarte con ganas de ir al baño.",
+ a:"Si tomás medicación para la presión, sedantes o tenés una condición médica relevante, consultá antes de usarla de forma regular."},
+{id:"manzanilla",t:"Manzanilla para apaciguar el vientre",tr:"F",p:15,min:7,cat:["panza"],
+ i:"Conocida por su uso tradicional para la comodidad digestiva: cuando aparece pesadez después de comer o el estómago está sensible.",
+ s:["Colocá 1 cucharadita de flores secas en una taza (200–250 ml).","Verté agua caliente y dejá infusionar 6 a 8 minutos.","Colá y tomá despacio, después de comer o a la tarde."],
+ c:"Si el aroma de las flores se volvió muy tenue, conviene renovarlas.",
+ a:"Acompaña la comodidad digestiva; no reemplaza la consulta si hay dolor intenso, sangrado o molestias que persisten."},
+{id:"melisa",t:"Melisa para relajarte sin apagarte",tr:"F",p:16,min:9,cat:["tension","dormir"],
+ i:"Se usa tradicionalmente para aflojar tensiones y acompañar la transición entre actividad y quietud.",
+ s:["Usá 1 cucharadita de hojas secas por taza (200–250 ml).","Hacé la infusión 8 a 10 minutos con agua caliente.","Colá y tomá preferentemente en la segunda mitad del día."],
+ c:"Anotá cómo te sentís (calma, facilidad para dormir, pesadez): cada cuerpo responde distinto.",
+ a:"Si estás embarazada o en período de lactancia, evitá el uso sin orientación profesional."},
+{id:"lavanda",t:"Lavanda para un descanso más amable",tr:"F",p:16,min:8,cat:["dormir"],
+ i:"Asociada a la calma y al descanso en las tradiciones herbales; acá como infusión suave para noches más tranquilas.",
+ s:["Usá 1/2 a 1 cucharadita de flores secas por taza (200–250 ml).","Infusioná 7 a 10 minutos con agua caliente.","Colá y tomá tibio, respirando lento mientras la tomás."],
+ c:"Elegí flores de buena calidad: el aroma agradable acompaña mejor la calma, sin subir la dosis.",
+ a:"Nunca uses aceite esencial por boca. Acá se trabaja con planta seca para infusión."},
+{id:"jengibre",t:"Jengibre para destrabar digestiones",tr:"F",p:16,min:6,cat:["panza","energia"],
+ i:"Se usa tradicionalmente para acompañar digestiones pesadas. Es estimulante: ideal para el día, no para la noche.",
+ s:["Rallá o cortá fino 1 a 2 cm de jengibre fresco (3 a 6 g).","Hervilo en 250 ml de agua 5 a 7 minutos (o infusión fuerte de 10 a 12 minutos).","Colá y tomá tibio. Si querés, endulzá con miel."],
+ c:"Si te resulta muy intenso, bajá la cantidad o no lo tomes tarde. Fresco se guarda en la heladera dentro de una bolsa.",
+ a:"Si tenés gastritis, reflujo marcado o tomás anticoagulantes, pedí orientación antes de usarlo con regularidad."},
+{id:"oregano",t:"Orégano para después de las comidas",tr:"F",p:17,min:6,cat:["panza"],
+ i:"No es solo para la pizza: en el uso tradicional acompaña el cierre del plato como infusión breve.",
+ s:["Usá 1/2 a 1 cucharadita de hojas secas por taza (200–250 ml).","Hacé la infusión 5 a 7 minutos con agua caliente.","Colá y tomá al terminar de comer o a media tarde."],
+ a:"Si notás que te irrita o te da acidez, suspendé y elegí otra planta."},
+{id:"diente",t:"Diente de león para los cambios de estación",tr:"F",p:17,min:12,cat:["estacion"],
+ i:"Parte de tradiciones herbolarias para las transiciones de estación, acompañando hidratación, alimentación y movimiento.",
+ s:["Usá 1 cucharadita de raíz seca por taza (200–250 ml).","Dejá reposar tapado 10 a 15 minutos (infusión más concentrada).","Colá y tomá a la mañana o al mediodía."],
+ c:"Registrá si te cae bien o si te activa demasiado la digestión.",
+ a:"Si tenés cálculos en la vesícula o problemas de hígado, evitá usarlo sin orientación profesional."},
+{id:"cola",t:"Cola de caballo en compresa (solo por fuera)",tr:"F",p:17,min:4,cat:["piel"],
+ i:"Se usa tradicionalmente por fuera, en enjuague o compresa, para la piel áspera.",
+ s:["Hacé una decocción suave: 1 cucharadita de planta seca en 250 ml de agua, herví 3 a 5 minutos.","Dejá entibiar y colá con cuidado.","Aplicá en compresa limpia o enjuague, 1 vez por día durante 5 a 7 días."],
+ c:"Probá primero en una zona chica. Si arde mucho, suspendé.",
+ a:"Solo uso externo. No se toma."},
+{id:"calendula",t:"Caléndula en aceite para piel que se irrita",tr:"F",p:18,cat:["piel"],
+ i:"Un clásico del cuidado externo para calmar y suavizar. Preparás tu propio aceite.",
+ s:["Llená un frasco de vidrio con flores secas hasta 1/3 o 1/2.","Cubrí con aceite de oliva o girasol hasta tapar la planta.","Dejá macerar 2 a 3 semanas en lugar fresco y oscuro; agitá cada tanto.","Colá, guardá en frasco limpio y usá una capa fina."],
+ c:"Dura 6 a 9 meses si no cambia el olor ni el aspecto.",
+ a:"Si hay dermatitis activa, heridas profundas o una reacción marcada, pedí evaluación profesional."},
+{id:"aloe",t:"Aloe después del sol",tr:"F",p:18,cat:["piel"],
+ i:"El gel refrescante del aloe, para la piel después de sol moderado o irritación leve.",
+ s:["Cortá una hoja madura, limpiala, sacá la parte externa y extraé el gel.","Dejá reposar el gel unos minutos y enjuagá suave si hace falta.","Aplicá una capa fina sobre la piel limpia y seca, 1 a 2 veces por día."],
+ a:"No lo uses sobre quemaduras severas con ampollas extensas: en ese caso, consultá."},
+{id:"ortiga",t:"Ortiga para el cambio de estación",tr:"F",p:18,min:10,cat:["estacion","energia"],
+ i:"En la tradición se usa como sostén del cuerpo durante los cambios de estación.",
+ s:["Usá 1 cucharadita de hojas secas por taza (200–250 ml).","Hacé la infusión 8 a 12 minutos.","Colá y tomá a la mañana o al mediodía; evitá la noche si te activa."],
+ c:"Empezá 2 o 3 días por semana y subí solo si tu cuerpo lo tolera bien.",
+ a:"Si tenés condiciones renales, tomás diuréticos o estás en tratamiento, consultá antes."},
+{id:"romero",t:"Romero para un arranque con enfoque",tr:"F",p:19,min:6,cat:["energia"],
+ i:"Acompaña el estado de alerta y la vitalidad. Infusión breve para la primera mitad del día.",
+ s:["Usá 1/2 a 1 cucharadita de hojas secas por taza (200–250 ml).","Infusioná 5 a 8 minutos con agua caliente.","Colá y tomá tibio, en el momento en que querés ordenar el día."],
+ a:"No te excedas. Si tenés presión alta, problemas convulsivos o estás embarazada, pedí orientación profesional."},
+{id:"pasiflora",t:"Pasiflora para una noche con más paciencia",tr:"F",p:19,min:11,cat:["dormir"],
+ i:"Un ancla nocturna: infusión suave que acompaña tu rutina de desconexión.",
+ s:["Usá 1 cucharadita de parte aérea seca (hojas y flores) por taza (200–250 ml).","Hacé la infusión 10 a 12 minutos.","Colá y tomala en la franja previa al sueño."],
+ a:"Si ya tomás medicación para dormir o ansiolíticos, no la combines sin asesoramiento."},
+{id:"salvia",t:"Salvia para gárgaras",tr:"F",p:19,min:8,cat:["garganta"],
+ i:"Tradicional para el confort de la garganta en gárgaras.",
+ s:["Infusión: 1 cucharadita de hojas secas en 250 ml de agua caliente.","Dejá reposar 7 a 10 minutos y colá.","Con una porción tibia hacé gárgaras 30 a 60 segundos y escupí. 1 a 2 veces al día."],
+ a:"No se traga. Si hay fiebre alta, dolor intenso o no mejora, consultá."},
+{id:"avena",t:"Avena en decocción para la piel",tr:"F",p:20,min:10,cat:["piel"],
+ i:"Para baños breves o compresas cuando la piel está seca o con irritación leve.",
+ s:["Usá 3 a 4 cucharadas de avena (mejor integral) en 500 ml de agua.","Herví 8 a 12 minutos, dejá entibiar y colá.","Aplicá en baño tibio o compresa 10 a 15 minutos, 1 vez al día, 3 a 5 días."],
+ c:"Después, secá con toques suaves y, si te resulta cómodo, una crema neutra."},
+// ---------- MEDICINA CHINA ----------
+{id:"mtc1",t:"Respiración que ordena",tr:"C",p:24,min:3,cat:["tension"],
+ i:"La puerta de entrada: coordinar respiración y atención para bajar revoluciones.",
+ s:["Sentate con la espalda cómoda y el mentón apenas recogido.","Una mano en el pecho y otra en el abdomen; sentí el movimiento sin forzar.","Inhalá por la nariz contando 3, exhalá contando 4, durante 6 ciclos.","Al exhalar, soltá: mandíbula y hombros bajan, lengua blanda.","Quedate 30 segundos quieta y registrá qué cambió."],
+ c:"Si tendés a la respiración acelerada, alargá la exhalación (3 y 5) siempre que sea cómodo."},
+{id:"mtc2",t:"Escaneo corporal en 8 minutos",tr:"C",p:25,min:8,cat:["habito"],
+ i:"Observar sin juicio qué zonas piden atención y cuáles están tranquilas.",
+ s:["Postura cómoda, ojos cerrados o mirada baja.","Recorré: frente, mandíbula, cuello, hombros, pecho, abdomen, caderas, espalda baja, piernas y pies.","En cada zona, una palabra: calma, tensión, calor, pesadez o vacío.","Notá qué zonas se ablandan con la exhalación.","Cerrá en el abdomen y elegí una zona para trabajar después."],
+ c:"No es un diagnóstico: es un registro para elegir mejor tu próxima práctica."},
+{id:"mtc3",t:"Automasaje suave de meridianos",tr:"C",p:25,min:7,cat:["tension"],
+ i:"Automasaje suave para que la sensación de rigidez se afloje. Presencia, no dolor.",
+ s:["Elegí una zona de tu escaneo (por ejemplo hombros o cuello).","Calentá las manos frotándolas 20 segundos.","Caricias lentas sobre la zona, sin apretar: 30 segundos.","Presión muy leve con las yemas, en círculos: 2 minutos.","Volvé a las caricias con 4 respiraciones largas."],
+ a:"Evitá automasajes fuertes. Si hay lesiones o inflamación aguda, consultá antes."},
+{id:"mtc4",t:"Cintura respiratoria",tr:"C",p:25,min:6,cat:["tension","energia"],
+ i:"Movimiento suave con respiración para que el cuerpo encuentre espacio.",
+ s:["De pie, pies a la altura de las caderas. Inhalá alargando el torso; exhalá aflojando hombros.","Rotación suave de columna con la exhalación, 4 veces por lado.","Flexión lateral sosteniendo 20 segundos, 2 por lado.","Manos arriba o en la cintura: inhalá abriendo costillas, exhalá bajando.","1 minuto sentada respirando lento."]},
+{id:"mtc5",t:"Sostén del centro",tr:"C",p:26,min:9,cat:["habito"],
+ i:"Una práctica de postura para recuperar la sensación de orden y estabilidad.",
+ s:["Sentate con la columna cómoda y larga.","Manos sobre los muslos, entrecejo flojo.","Respirá en 4 tiempos: inhalá 4, exhalá 4.","Al exhalar, imaginá el peso cayendo en pies y pelvis.","Activá apenas el abdomen, sin empujar: 6 ciclos.","1 minuto de quietud observando."]},
+{id:"mtc6",t:"Ventanas internas: descanso",tr:"C",p:26,min:12,cat:["dormir"],
+ i:"Una secuencia corta de descenso para que el cuerpo entienda que es hora de aflojar.",
+ s:["Apagá notificaciones y bajá las luces 20 minutos antes.","3 respiraciones lentas con la exhalación más larga.","Oreja hacia el hombro, sin llegar al límite: 30 segundos por lado.","Al exhalar, imaginá que el cuerpo se rinde suavemente.","Mano en el abdomen: 4 minutos respirando sin contar."]},
+{id:"mtc7",t:"Microhábitos de circulación en el día",tr:"C",p:26,cat:["energia","habito"],
+ i:"No depende de una práctica suelta: depende de tu día.",
+ s:["Cada 60 a 90 minutos, 1 pausa de 60 segundos: caminá o estirá cuello y hombros.","Tomá agua en sorbos durante el día, no todo a la noche.","Postura de trabajo con apoyo: pies firmes, pantalla a la altura de los ojos.","Después de comer, no te acuestes enseguida.","2 minutos de respiración consciente antes de salir o de una tarea exigente."],
+ c:"Atá la pausa a algo fijo (terminar una llamada, cambiar de tarea)."},
+{id:"mtc8",t:"Relajación progresiva: soltar por capas",tr:"C",p:27,min:12,cat:["tension","dormir"],
+ i:"Ideal cuando te sentís encendida o cargada.",
+ s:["Posición cómoda, respiración suave.","Manos: apretá 3 segundos y soltá 8, 3 veces.","Hombros: subí 2 segundos y soltá 6, 4 veces.","Abdomen: llevá aire, exhalá y aflojá 5 segundos.","Piernas: activá el muslo 3 segundos y soltá 8, 2 por lado.","2 minutos de quietud."]},
+{id:"mtc9",t:"Plan semanal de equilibrio",tr:"C",p:27,cat:["habito"],
+ i:"Para volver sostenible lo aprendido, sin el todo o nada.",
+ s:["Elegí tu núcleo: Respiración que ordena o Escaneo corporal.","Elegí un complemento: automasaje, cintura respiratoria, sostén del centro, descanso o relajación.","Definí días: 2 de núcleo + 1 de complemento.","Reservá 1 día de mantenimiento: pausas, postura y respiración corta.","Al final de la semana, 3 líneas: qué mejoró, qué fue fácil, qué ajustás."]},
+// ---------- AYURVEDA ----------
+{id:"ay1",t:"Mañana suave para arrancar (vata)",tr:"A",p:30,min:15,cat:["energia"],
+ i:"Cuando la energía aparece a pedacitos y te cuesta el foco: un inicio cálido y ordenado.",
+ s:["1 vaso de agua tibia, sin apuro.","Caminata suave de 5 a 8 minutos atenta a la respiración.","3 minutos de estiramientos suaves de cuello, hombros y columna.","Desayuno cálido y simple, masticando despacio.","Antes de mirar pantallas: 6 respiraciones lentas."],
+ c:"Si estás apurada: agua tibia + respiración lenta ya marcan la dirección."},
+{id:"ay2",t:"Pitta en calma: bajar el exceso de calor",tr:"A",p:30,min:15,cat:["tension","panza"],
+ i:"Cuando hay irritabilidad, acidez o mente acelerada.",
+ s:["Después de la primera comida, 5 minutos sentada con respiración nasal lenta.","Por unas horas, evitá bebidas muy calientes o picantes.","3 minutos sin pantallas, espalda apoyada, mandíbula floja.","Caminata tranquila de 6 a 10 minutos.","2 minutos observando la piel y el estómago, sin juzgar."],
+ a:"Si hay síntomas digestivos intensos, dolor fuerte, sangrado o fiebre, consultá."},
+{id:"ay3",t:"Kapha con movimiento para la inercia",tr:"A",p:31,min:20,cat:["energia"],
+ i:"Cuando el cuerpo pesa, la mente se nubla o cuesta arrancar.",
+ s:["1 vaso de agua tibia y esperá 10 minutos antes de comer.","5 minutos de caminata a paso firme.","8 a 10 minutos de movilidad: caderas, tobillos, hombros y espalda.","2 minutos de respiración nasal con ritmo constante.","Comida ligera y caliente, sin excesos fríos o pesados."],
+ c:"Lo pequeño, constante y cálido gana."},
+{id:"ay4",t:"Rutina de mediodía para tu digestión",tr:"A",p:31,min:25,cat:["panza","habito"],
+ i:"El mediodía es una ventana clave: si respetás el ritmo, ganás energía más pareja.",
+ s:["Comé en un horario parecido cada día.","Antes del plato: 3 respiraciones lentas.","Porciones razonables: alimentar, no llenar.","Masticá más lento (unas 20 veces por bocado).","Al terminar, caminata suave de 5 a 10 minutos.","Si hay siesta, que sea breve."],
+ c:"Si hoy no podés todo: horario + respiración + masticación + caminata corta."},
+{id:"ay5",t:"Descanso nocturno reparador",tr:"A",p:31,min:30,cat:["dormir"],
+ i:"Un puente entre el día y la noche para que el cuerpo entienda que es hora.",
+ s:["30 a 60 minutos sin pantallas o con luz tenue.","Ducha tibia o lavado de cara con agua tibia.","Escribí 3 líneas sobre lo que queda para mañana.","5 minutos de respiración lenta con atención en el abdomen.","Ambiente ventilado, temperatura agradable, cama lista.","Si no te dormís, ritual fijo de 10 minutos (lectura suave) sin pelearte con la cama."],
+ a:"Si hay insomnio severo, apneas, pesadillas frecuentes o somnolencia marcada, consultá."},
+{id:"ay6",t:"Comer consciente en 5 gestos",tr:"A",p:32,cat:["panza","habito"],
+ i:"No es una dieta: es una manera de comer que te vuelve protagonista.",
+ s:["Elegí comida para tu momento: caliente si hace frío o estás pesada; más liviana si sobra calor.","Comé sentada y tranquila, sin hacer otra cosa.","Frená antes de quedar a tope.","20 minutos después, observá estómago y energía.","Cerrá agradeciendo y anotá una frase de cómo te fue."],
+ c:"Tu registro es información, no culpa."},
+{id:"ay7",t:"Transición mañana-tarde sin bajón",tr:"A",p:32,min:10,cat:["energia"],
+ i:"Un puente para que la energía no se corte de golpe a media tarde.",
+ s:["A media tarde, pausa corta en lugar de aguantar.","Agua tibia o natural, en sorbos.","3 minutos de movilidad de espalda y caderas.","5 respiraciones completas, cara floja.","Retomá con UNA tarea chica que termines en menos de 20 minutos."],
+ c:"Si la energía cae rápido, pausas más seguidas y más cortas."},
+{id:"ay8",t:"Transición tarde-noche para soltar el día",tr:"A",p:33,min:18,cat:["dormir","tension"],
+ i:"La noche no empieza cuando te acostás: empieza cuando tu cuerpo suelta.",
+ s:["Lista corta de pendientes para mañana (máximo 5).","5 minutos de orden simple.","Respiración lenta con la exhalación más larga.","Nada de discusiones ni contenido que te active antes de cenar.","Cená con atención y no muy tarde."]},
+{id:"ay9",t:"Tu registro de doshas (7 días)",tr:"A",p:33,min:6,cat:["habito"],
+ i:"Leer tus patrones: en vez de qué soy, qué me pasa cuando cambia la rutina.",
+ s:["4 indicadores: energía de mañana, digestión, ánimo y sueño.","Puntuá cada uno del 1 al 5 al final del día.","Anotá un disparador probable (horario, comida, estrés, clima).","Escribí: cuando pasa X, yo siento Y.","El día 7, resumí qué mejora con rutina y qué empeora con desorden."]},
+// ---------- FLORES DE BACH ----------
+{id:"b1",t:"Mapa emocional del día",tr:"B",p:37,min:12,cat:["emociones"],
+ i:"Cuando sentís muchas cosas a la vez y no le encontrás nombre.",
+ s:["Anotá 3 momentos del día (mañana, tarde, noche) y qué estabas viviendo.","Para cada uno, una emoción principal y una secundaria.","Intensidad de 0 a 10, solo como registro.","Elegí 1 o 2 palabras que resuman tu patrón.","Cerrá con: Hoy quiero volver a mí con ____."]},
+{id:"b2",t:"El miedo en niveles",tr:"B",p:38,cat:["emociones"],
+ i:"Ubicar el miedo: qué lo dispara, cuánto ocupa y cómo se mueve en el día.",
+ s:["Elegí un disparador posible.","Completá: Me gana el miedo cuando ____.","Armá 3 niveles (0, 5, 10) con una señal para cada uno.","Durante el día, marcá en qué nivel estás y qué ayudó.","Al final: ¿qué te pide? Contención, información, pausa o compañía."],
+ a:"Si el miedo viene con angustia intensa, ataques de pánico o ideas de daño, no es para manejarlo sola: buscá apoyo profesional."},
+{id:"b3",t:"Irritación con causa",tr:"B",p:38,cat:["emociones"],
+ i:"Pasar de la reacción a la necesidad que hay debajo.",
+ s:["Anotá un episodio reciente: qué pasó y ante qué.","Elegí la emoción: irritación, enojo, fastidio o impaciencia.","Probablemente fue ____ (cansancio, falta de tiempo, invasión de espacio).","Lo que necesito es ____.","Una microacción para las próximas 24 horas."]},
+{id:"b4",t:"Desánimo: ritual de regreso",tr:"B",p:38,min:14,cat:["emociones","energia"],
+ i:"Pasitos chicos y repetibles para volver a una zona de posibilidad.",
+ s:["2 minutos: elegí una palabra ancla para hoy.","5 minutos: ¿qué parte del día se apagó? Anotá una cosa.","7 minutos: un gesto mínimo de cuidado (ordenar, agua, caminar, respirar).","Cerrá con intensidad 0 a 10 y: hoy me ayudó ____."]},
+{id:"b5",t:"Hipersensibilidad y umbrales",tr:"B",p:39,min:12,cat:["emociones","tension"],
+ i:"Reconocer tus umbrales y protegerte sin aislarte.",
+ s:["Escribí 2 situaciones que te sobrecargan.","Para cada una, tus señales tempranas.","Definí: Cuando pase X, necesito Y.","Frase de permiso: Puedo ajustar el ritmo sin culpa.","A la noche, registrá si el ajuste te ayudó."]},
+{id:"b6",t:"Incertidumbre en blanco y negro",tr:"B",p:39,cat:["emociones"],
+ i:"Ordenar la niebla en dos columnas y pasar a la acción.",
+ s:["Escribí el tema de tu incertidumbre en una frase.","Columna A, depende de mí: 3 acciones chicas y reales.","Columna B, no depende de mí por ahora: 3 cosas.","Frase guía: Hoy avanzo en ____ y suelto ____.","Al final, intensidad 0 a 10: ¿se aflojó la rumia?"],
+ c:"La claridad llega por movimiento, no por forzarte a entender todo."},
+{id:"b7",t:"Diario comparativo de 7 días",tr:"B",p:39,cat:["emociones","habito"],
+ i:"Detectar patrones, no juicios.",
+ s:["Una entrada por día: emoción principal, intensidad, contexto y una frase de aprendizaje.","Elegí 2 o 3 asociaciones como hipótesis.","Si un día no encaja nada, anotá otro y describilo.","Día 7: Se repite ____ · Me ayuda cuando ____ · Empeoro con ____.","Elegí una práctica para los próximos 7 días."]},
+// ---------- REFLEXOLOGIA ----------
+{id:"r1",t:"Mano en calma",tr:"R",p:44,min:5,cat:["tension"],
+ i:"Para empezar el día o afinar el tacto.",
+ s:["Palma hacia arriba; con la otra mano abrazá la muñeca y respirá 5 veces.","Caricia amplia en la palma 30 segundos, de los dedos a la muñeca.","6 círculos pequeños en la base del pulgar.","Recorré cada dedo de la base a la punta, 3 veces.","Envolvé la mano 10 segundos en silencio."],
+ c:"Si aparece sensibilidad eléctrica o dolor, bajá la intensidad."},
+{id:"r2",t:"Pie anclado: descanso y apoyo",tr:"R",p:45,min:6,cat:["dormir","tension"],
+ i:"Cuando el cuerpo está inquieto, el pie es la base: sensación de soporte y aterrizaje.",
+ s:["Pie sobre una toalla: 6 deslizamientos lentos del talón hacia adelante.","Con el pulgar, 3 pasadas por el borde interno de la planta.","En el arco, 5 presiones de 2-3 segundos, cada una con una exhalación.","20 segundos de amasado muy leve alrededor del talón.","10 segundos de masaje envolvente en toda la planta."],
+ a:"Evitalo si hay heridas, infecciones en la piel, trombosis o dolor agudo sin causa conocida."},
+{id:"r3",t:"Pulgar y lateral de la mano",tr:"R",p:45,min:4,cat:["habito"],
+ i:"Un tacto más puntual para observar cómo cambia la sensación.",
+ s:["Tomá el pulgar por la base sin tirar: 8 segundos.","8 círculos en la parte carnosa del pulgar.","6 pasadas por el borde lateral de la mano hacia la muñeca.","5 presiones cortas alternadas, siempre con exhalación."]},
+{id:"r4",t:"Dedos del pie",tr:"R",p:45,min:4,cat:["tension"],
+ i:"Ideal después de mucho rato de pie o con calzado ajustado.",
+ s:["Sostené el pie por el talón y respirá 3 veces.","2 deslizamientos en cada dedo, de la base a la punta.","6 círculos en la yema del dedo gordo.","2 pasadas envolventes en cada dedo, de vuelta a la base.","15 segundos de caricia por arriba del pie."]},
+{id:"r5",t:"Línea del empeine",tr:"R",p:46,min:4,cat:["habito"],
+ i:"Una línea de contacto continua y pausada sobre el empeine.",
+ s:["Sostené el pie desde los costados 5 segundos.","Con la yema del pulgar, 6 pasadas lentas sobre el empeine.","Si incomoda, cambiá a la palma.","3 pausas de 3 segundos en un punto, respirando.","20 segundos de caricia del empeine al tobillo."]},
+{id:"r6",t:"Muñeca y tobillo: soltar el cierre",tr:"R",p:46,min:4,cat:["tension"],
+ i:"Para la rigidez que se acumula sin que te des cuenta.",
+ s:["Muñeca: 6 círculos suaves alrededor.","10 segundos de caricia de la muñeca a la palma.","Palma sobre el tobillo, 8 segundos respirando lento.","5 pasadas suaves alrededor del tobillo.","3 exhalaciones largas con contacto en ambos puntos."]},
+{id:"r7",t:"Recorrido completo de manos y pies",tr:"R",p:47,min:25,cat:["dormir","tension"],
+ i:"Una sesión de 20 a 30 minutos para cerrar la jornada.",
+ s:["Mano 3-5 min: Mano en calma.","Mano 2-3 min: Pulgar y lateral.","Pie 4-6 min: Pie anclado.","Pie 3-4 min: Dedos del pie.","Pie 3-4 min: Línea del empeine.","2-3 min: Muñeca y tobillo y una caricia envolvente de 10 segundos."]}
+];
+const CATS=[
+ {k:"dormir",n:"No puedo dormir",e:"🌙",d:"bajar el cambio de noche"},
+ {k:"panza",n:"Comí de más / la panza",e:"🍵",d:"pesadez y digestión"},
+ {k:"tension",n:"Estoy a mil",e:"🌬️",d:"tensión y nervios del día"},
+ {k:"energia",n:"Me cuesta arrancar",e:"☀️",d:"energía y foco"},
+ {k:"garganta",n:"La garganta",e:"🌿",d:"gárgaras de confort"},
+ {k:"piel",n:"La piel",e:"🌼",d:"cuidado por fuera"},
+ {k:"estacion",n:"Cambio de estación",e:"🍂",d:"sostén en la transición"},
+ {k:"emociones",n:"Lo que siento",e:"💚",d:"miedo, enojo, desánimo"},
+ {k:"habito",n:"Conocerme y sostenerlo",e:"📓",d:"registro y rutina"}
+];
+const DESPENSA=[
+ ["manzanilla","Manzanilla (flor seca)","para después de comer"],["tila","Tila (flor seca)","para la noche"],
+ ["melisa","Melisa (hoja seca)","relajarte sin apagarte"],["lavanda","Lavanda (flor seca, nunca aceite)","noches más amables"],
+ ["pasiflora","Pasiflora (hojas y flores)","antes de dormir"],["jengibre","Jengibre fresco","digestiones pesadas, de día"],
+ ["oregano","Orégano (hoja seca)","cierre del plato"],["romero","Romero (hoja seca)","arranque con enfoque"],
+ ["salvia","Salvia (hoja seca)","gárgaras"],["ortiga","Ortiga (hoja seca)","cambio de estación"],
+ ["diente","Diente de león (raíz seca)","rutinas de estación"],["avena","Avena integral","baños y compresas para la piel"]
+];
+const SEMANA=[
+ {d:"Día 1 · Ordenar",r:[["mañana","mtc1","Respiración que ordena (3 min)"],["noche","tila","Tu primera taza de tila"]]},
+ {d:"Día 2 · Arrancar suave",r:[["mañana","ay1","Mañana suave para arrancar"],["después de comer","manzanilla","Manzanilla"]]},
+ {d:"Día 3 · Comer con calma",r:[["mañana","romero","Romero para el foco"],["mediodía","ay4","Rutina de mediodía"]]},
+ {d:"Día 4 · Escucharte",r:[["tarde","mtc2","Escaneo corporal"],["noche","r2","Pie anclado"]]},
+ {d:"Día 5 · Sin bajón",r:[["media tarde","ay7","Transición sin bajón"],["noche","b1","Mapa emocional del día"]]},
+ {d:"Día 6 · Tu día fluye",r:[["todo el día","mtc7","Microhábitos de circulación"],["tarde","melisa","Melisa"]]},
+ {d:"Día 7 · Soltar y planear",r:[["noche","ay8","Transición tarde-noche"],["noche","mtc9","Tu plan para la semana que viene"]]}
+];
+const $=s=>document.querySelector(s), app=$("#app");
+const guardar=(k,v)=>{try{localStorage.setItem("fv_"+k,JSON.stringify(v))}catch(e){}};
+const leer=(k,d)=>{try{return JSON.parse(localStorage.getItem("fv_"+k))??d}catch(e){return d}};
+const porId=id=>P.find(x=>x.id===id);
+let vista="inicio", timerId=null;
+function item(x){return `<button class="item" onclick="ficha('${x.id}')"><div><b>${x.t}</b><small>${T[x.tr]} · pág. ${x.p}${x.min?" · "+x.min+" min":""}</small></div><span>›</span></button>`}
+function inicio(){
+ vista="inicio";
+ app.innerHTML=`<div class="grilla">${CATS.map(c=>`<button class="cat" onclick="categoria('${c.k}')"><span>${c.e}</span>${c.n}<em>${c.d}</em></button>`).join("")}</div>
+ ${instalarAviso()}
+ <h2>Para esta noche</h2>${["tila","pasiflora","r2"].map(id=>item(porId(id))).join("")}
+ <p class="nota">Material educativo. Antes de usar una planta, leé su ATENCIÓN. Si tomás medicación todos los días, consultá antes de sumar una planta a diario.</p>`;
+}
+function instalarAviso(){
+ if(leer("instalada",false)||window.matchMedia("(display-mode: standalone)").matches)return"";
+ return `<div class="instalar"><b>Tenela como app:</b> en el celu tocá <b>Compartir</b> (iPhone) o los <b>tres puntitos</b> (Android) → <b>Agregar a pantalla de inicio</b>. <a href="#" onclick="guardar('instalada',true);inicio();return false">Listo</a></div>`;
+}
+function categoria(k){
+ const c=CATS.find(x=>x.k===k);
+ app.innerHTML=`<button class="volver" onclick="inicio()">‹ Volver</button><h2>${c.e} ${c.n}</h2>${P.filter(x=>x.cat.includes(k)).sort((a,b)=>(a.tr==="F"?0:1)-(b.tr==="F"?0:1)).map(item).join("")}`;
+ scrollTo(0,0);
+}
+function ficha(id){
+ const x=porId(id); pararTimer();
+ app.innerHTML=`<button class="volver" onclick="history.length>1&&vista!=='ficha'?inicio():inicio()">‹ Volver</button>
+ <div class="ficha"><span class="chip">${T[x.tr]}</span>${x.min?`<span class="chip">${x.min} min</span>`:""}
+ <h3>${x.t}</h3><p class="intro">${x.i}</p>
+ <ol class="pasos">${x.s.map(s=>`<li>${s}</li>`).join("")}</ol>
+ ${x.min?`<div class="timer"><small>Temporizador</small><div class="reloj" id="reloj">${fmt(x.min*60)}</div>
+ <button onclick="arrancar(${x.min*60})">▶ Empezar</button><button onclick="pararTimer();$('#reloj').textContent='${fmt(x.min*60)}'">↺</button></div>`:""}
+ ${x.c?`<div class="caja consejo"><b>Consejo</b>${x.c}</div>`:""}
+ ${x.a?`<div class="caja atencion"><b>Atención</b>${x.a}</div>`:""}
+ <div class="pag">En tu libro: página ${x.p}</div></div>`;
+ scrollTo(0,0);
+}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function arrancar(total){
+ pararTimer(); const fin=Date.now()+total*1000;
+ timerId=setInterval(()=>{const r=Math.max(0,Math.round((fin-Date.now())/1000));const el=$("#reloj");if(el)el.textContent=fmt(r);
+  if(r<=0){pararTimer();if(el)el.textContent="¡Lista! 🍵";try{navigator.vibrate&&navigator.vibrate([300,150,300])}catch(e){}
+   try{const a=new (window.AudioContext||window.webkitAudioContext)();[0,.35].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.2,a.currentTime+t);o.start(a.currentTime+t);o.stop(a.currentTime+t+.25)})}catch(e){}}},250);
+}
+function pararTimer(){if(timerId){clearInterval(timerId);timerId=null}}
+function semana(){
+ vista="semana"; const h=leer("semana",{}); const tot=SEMANA.reduce((n,d)=>n+d.r.length,0); const ok=Object.values(h).filter(Boolean).length;
+ app.innerHTML=`<h2>☀️ Semana 1 de Vitalidad</h2>
+ <p style="margin:0 4px">Dos rituales cortos por día, sacados de tu libro. No es hacerlo perfecto: es hacerlo.</p>
+ <div class="dia"><b>${ok} de ${tot} hechos</b><div class="barra"><i style="width:${Math.round(ok/tot*100)}%"></i></div></div>
+ ${SEMANA.map((d,i)=>`<div class="dia"><h4>${d.d}</h4>${d.r.map((r,j)=>{const k=i+"-"+j;return `<label><input type="checkbox" ${h[k]?"checked":""} onchange="marcar('${k}',this.checked)"><span><small>${r[0]}</small><br><a href="#" onclick="ficha('${r[1]}');return false">${r[2]}</a></span></label>`}).join("")}</div>`).join("")}
+ ${ok===tot?`<div class="dia"><h4>🎉 ¡Terminaste tu semana!</h4>Ya sos la que sabe qué hacer en su casa. Repetí la semana con el <a href="#" onclick="ficha('mtc9');return false">plan semanal</a>.</div>`:""}`;
+ scrollTo(0,0);
+}
+function marcar(k,v){const h=leer("semana",{});h[k]=v;guardar("semana",h);semana()}
+function despensa(){
+ vista="despensa"; const h=leer("despensa",{});
+ app.innerHTML=`<h2>🫙 La Despensa Verde</h2><p style="margin:0 4px 6px">Las 12 plantas que cubren tu semana. Tildá las que ya tenés; las otras van a tu lista para la herboristería o la verdulería.</p>
+ <div class="despensa">${DESPENSA.map(([id,n,d])=>`<label><input type="checkbox" ${h[id]?"checked":""} onchange="tengo('${id}',this.checked)"><span>${n}<small>${d} · <a href="#" onclick="ficha('${id}');return false">ver receta</a></small></span></label>`).join("")}</div>
+ <a class="btn" href="#" onclick="compartirLista();return false">Mandarme la lista por WhatsApp</a>
+ <p class="nota">Comprá planta seca para infusión, en frasco de vidrio bien cerrado, lejos de la luz y la humedad. Si pierde el aroma, renovala.</p>`;
+ scrollTo(0,0);
+}
+function tengo(id,v){const h=leer("despensa",{});h[id]=v;guardar("despensa",h)}
+function compartirLista(){const h=leer("despensa",{});const f=DESPENSA.filter(x=>!h[x[0]]).map(x=>"• "+x[1]);
+ const txt="Mi lista de la Despensa Verde 🌿\n"+(f.length?f.join("\n"):"¡Ya tengo todo!");location.href="https://wa.me/?text="+encodeURIComponent(txt)}
+function todo(){
+ vista="todo";
+ app.innerHTML=Object.keys(T).map(k=>`<h2>${T[k]} (${P.filter(x=>x.tr===k).length})</h2>${P.filter(x=>x.tr===k).map(item).join("")}`).join("");
+ scrollTo(0,0);
+}
+function buscar(q){
+ q=q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").trim(); if(!q){inicio();return}
+ const n=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+ const sin={dormir:"dormir",sueno:"dormir",noche:"dormir",panza:"panza",estomago:"panza",digest:"panza",comi:"panza",nervio:"tension",estres:"tension",ansie:"tension",energia:"energia",cansad:"energia",garganta:"garganta",piel:"piel",miedo:"emociones",enojo:"emociones",triste:"emociones",desanimo:"emociones"};
+ const cs=Object.keys(sin).filter(k=>q.includes(k)||k.includes(q)).map(k=>sin[k]);
+ const r=P.filter(x=>n(x.t+" "+x.i+" "+x.s.join(" ")).includes(q)||x.cat.some(c=>cs.includes(c)));
+ app.innerHTML=`<h2>${r.length} resultado${r.length===1?"":"s"}</h2>${r.map(item).join("")||"<p>Probá con otra palabra: dormir, panza, garganta, piel, nervios…</p>"}`;
+}
+$("#buscar").addEventListener("input",e=>buscar(e.target.value));
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#buscar").value="";({inicio,semana,despensa,todo})[b.dataset.v]()});
+inicio();
+</script>
+</body>
+</html>
